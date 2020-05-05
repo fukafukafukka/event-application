@@ -1,0 +1,45 @@
+version: '3'
+services:
+  webserver:
+    # restart: always
+    environment:
+      ENV: DEV
+    build:
+      context: ./dockerfile_for_webserver/
+      dockerfile: Dockerfile
+    tty: true
+    volumes:
+      - ./app:/app
+    ports:
+      - "5000:5000"
+    networks:
+      - app-net
+  logcontainer:
+    restart: always
+    build:
+      context: ./dockerfile_for_logcontainer/
+      dockerfile: Dockerfile
+    tty: true
+    volumes:
+      - ./app/src/log:/log
+    networks:
+      - app-net
+  dbserver:
+    image: mysql
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d # ⇦ /docker-entrypoint-initdb.dこれの意味がわからん。便宜的な名前?
+    # restart: always
+    environment:
+      MYSQL_DATABASE: event
+      MYSQL_USER: keisuke
+      MYSQL_PASSWORD: chankei68
+      MYSQL_ROOT_PASSWORD: chankei68
+      MYSQL_PORT: 3306 # MySQLのデフォルトポート
+    ports:
+      - 3306:3306 # 3306のポートがきたら、3306のポートを使う
+    networks:
+      - app-net
+networks:
+  app-net:
+    driver: bridge

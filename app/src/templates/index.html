@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+{% block content %}
+<form action="/home" method="POST" enctype="multipart/form-data"></form>
+<div>Evnt-In</div>
+<div class="first-column">first-column</div>
+<div class="second-column">
+    <div id="second-column">
+        <table border="1">
+        <thead>
+            <tr>
+                <th>イベント名</th>
+                <th>イベント詳細</th>
+                <th>日程</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if all_events != None%}
+                {% for event in all_events %}
+                <tr>
+                    <td>{{event[1]}}</td>
+                    <td>{{event[2]}}</td>
+                    <td>{{event[3]}}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            {% endif %}　
+        </tbody>
+        </table>
+    </div>
+</div>
+<div class="third-column">third-column</div>
+{% endblock %}
