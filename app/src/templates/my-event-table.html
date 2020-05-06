@@ -1,0 +1,35 @@
+<div id="my-event-table">
+    <div>自作Event</div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>イベント名</th>
+                <th>イベント詳細</th>
+                <th>日程</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if my_events != None and my_events|length != 0 %}
+            {% for event in my_events %}
+            <form action="/update" method="POST" id="update_{{event[0]}}"></form>
+            <form action="/delete" method="POST" id="delete_{{event[0]}}"></form>
+            <tr>
+                <input type="hidden" name="event_id" value={{event[0]}} form="update_{{event[0]}}">
+                <input type="hidden" name="event_id" value={{event[0]}} form="delete_{{event[0]}}">
+                <td><input type="text" name="event_name" value={{event[1]}} form="update_{{event[0]}}"></td>
+                <td><input type="text" name="event_details" value={{event[2]}} form="update_{{event[0]}}"></td>
+                <td><input type="date" name="date" value={{event[3]}} form="update_{{event[0]}}"></td>
+                <td><input type="submit" value="更新" form="update_{{event[0]}}" style=border:none;></td>
+                <td><input type="submit" value="削除" form="delete_{{event[0]}}" style=border:none;></td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            </tr>
+        {% endif %}　
+        </tbody>
+    </table>
+</div>

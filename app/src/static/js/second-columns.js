@@ -1,7 +1,7 @@
 'use strict';
 
 {
-    const secondColumnId = document.getElementById('second-column');
+    const secondColumnId = document.getElementById('event-table');
     secondColumnId.classList.add('hidden')
     document.getElementsByClassName('second-column')[0].addEventListener('click', () => {
         if(secondColumnId.classList.contains("visible")){

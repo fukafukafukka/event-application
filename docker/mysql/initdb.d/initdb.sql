@@ -17,15 +17,19 @@ CREATE TABLE event_overview
   event_id INT(20) AUTO_INCREMENT,
   event_name VARCHAR(20) UNIQUE NOT NULL,
   event_details VARCHAR(40),
-  date DATETIME NOT NULL,
+  date DATE NOT NULL,
+  host VARCHAR(20) NOT NULL,
   PRIMARY KEY (event_id)
 ) ENGINE = InnoDB;
 
 DROP TABLE IF EXISTS event_attendees;
 CREATE TABLE event_attendees
 (
-  event_id INT(20) AUTO_INCREMENT,
-  event_name VARCHAR(20) UNIQUE NOT NULL,
-  user_name VARCHAR(20) NOT NULL,
-  PRIMARY KEY (event_id)
+  attendees_id INT(20) AUTO_INCREMENT,
+  event_id INT(20) NOT NULL,
+  event_name VARCHAR(20) NOT NULL,
+  attendees VARCHAR(20) NOT NULL,
+  PRIMARY KEY (attendees_id)
 ) ENGINE = InnoDB;
+
+CREATE INDEX user_and_event ON event_attendees(attendees, event_id);

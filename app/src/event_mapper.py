@@ -1,6 +1,7 @@
 import MySQLdb
 import connection_password_mysqldb
 import logging.config
+import datetime
 
 # ログ設定ファイルからログ設定を読み込み
 logging.config.fileConfig('/app/src/log/log.conf')
@@ -19,7 +20,186 @@ def get_con():
             use_unicode=True)
     return con
 
-def insert_into_tank_bodies(tank_name, be_shot_count, engine, fuel_tank, gun, caterpillar):
+def insert_into_event_overview(event_name, event_details, date, host):
+    con = None
+    try:
+        con = get_con()
+    except Exception as e:
+        logger.log(30,'MySQLとの接続エラー発生')
+        raise(e)
+
+    # カーソルを取得する
+    cur= con.cursor()
+
+    try:
+        tdatetime = datetime.datetime.strptime(date, '%Y-%m-%d')
+        tdate = datetime.date(tdatetime.year, tdatetime.month, tdatetime.day)
+        # 車体をinsertする
+        cur.execute(
+            "INSERT INTO event_overview(event_name, event_details, date, host) \
+            VALUES (%s,%s,%s,%s)", \
+            (event_name, event_details, tdate, host))
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        logger.log(30,'MySQL、Insert処理失敗')
+        raise(e)
+
+def select_joined_event_overview(user_name):
+    con = None
+    try:
+        con = get_con()
+    except Exception as e:
+        logger.log(30,'MySQLとの接続エラー発生')
+        raise(e)
+
+    # カーソルを取得する
+    cur= con.cursor()
+
+    try:
+        cur.execute(
+            "SELECT a.event_id, a.event_name, a.event_details, a.date \
+                FROM event_overview AS a \
+                WHERE EXISTS ( \
+                    SELECT * FROM event_attendees AS b \
+                        WHERE b.attendees = '%s' \
+                            and b.event_id = a.event_id \
+                );" % user_name)
+        joined_events = cur.fetchall()
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        logger.log(30,'MySQL、Select処理失敗(select_all_event_overview)')
+        raise(e)
+
+    return joined_events
+
+def select_not_joined_event_overview(user_name):
+    con = None
+    try:
+        con = get_con()
+    except Exception as e:
+        logger.log(30,'MySQLとの接続エラー発生')
+        raise(e)
+
+    # カーソルを取得する
+    cur= con.cursor()
+
+    try:
+        cur.execute(
+            "SELECT a.event_id, a.event_name, a.event_details, a.date\
+                FROM event_overview AS a \
+                LEFT JOIN event_attendees AS b \
+                    ON b.attendees = '%s' \
+                       AND b.event_id = a.event_id \
+                WHERE b.attendees IS NULL;" % user_name)
+        not_joined_events = cur.fetchall()
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        logger.log(30,'MySQL、Select処理失敗(select_all_event_overview)')
+        raise(e)
+
+    return not_joined_events
+
+def select_my_event_overview(user_name):
+    con = None
+    try:
+        con = get_con()
+    except Exception as e:
+        logger.log(30,'MySQLとの接続エラー発生')
+        raise(e)
+
+    # カーソルを取得する
+    cur= con.cursor()
+
+    try:
+        cur.execute(
+            "SELECT * FROM event_overview where host = '%s'" % user_name)
+        my_events = cur.fetchall()
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        logger.log(30,'MySQL、Select処理失敗(select_my_event_overviewメソッド)')
+        raise(e)
+
+    return my_events
+
+def update_event_overview(event_id, event_name, event_details, date, host):
+    con = None
+    try:
+        con = get_con()
+    except Exception as e:
+        logger.log(30,'MySQLとの接続エラー発生')
+        raise(e)
+
+    # カーソルを取得する
+    cur= con.cursor()
+
+    try:
+        tdatetime = datetime.datetime.strptime(date, '%Y-%m-%d')
+        tdate = datetime.date(tdatetime.year, tdatetime.month, tdatetime.day)
+
+        sql = "UPDATE event_overview SET event_name = %s, event_details = %s, date = %s, host = %s WHERE event_id = %s"
+        cur.execute(sql, (event_name, event_details, tdate, host, event_id))
+        r = cur.fetchall()
+
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        logger.log(30,'MySQL、Update処理失敗')
+        raise(e)
+
+def delete_event_overview(event_id):
+    con = None
+    try:
+        con = get_con()
+    except Exception as e:
+        logger.log(30,'MySQLとの接続エラー発生')
+        raise(e)
+
+    # カーソルを取得する
+    cur= con.cursor()
+
+    try:
+        cur.execute(
+            "DELETE FROM event_overview WHERE event_id = '%s'" % event_id
+        )
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        logger.log(30,'MySQL、Delete処理失敗')
+        raise(e)
+
+def delete_event_attendees(event_id):
+    con = None
+    try:
+        con = get_con()
+    except Exception as e:
+        logger.log(30,'MySQLとの接続エラー発生')
+        raise(e)
+
+    # カーソルを取得する
+    cur= con.cursor()
+
+    try:
+        cur.execute(
+            "DELETE FROM event_attendees WHERE event_id = '%s'" % event_id
+        )
+        con.commit()
+        cur.close()
+        con.close()
+    except Exception as e:
+        logger.log(30,'MySQL、Delete処理失敗')
+        raise(e)
+
+def join_event(event_id, event_name, user_name):
     con = None
     try:
         con = get_con()
@@ -33,60 +213,17 @@ def insert_into_tank_bodies(tank_name, be_shot_count, engine, fuel_tank, gun, ca
     try:
         # 車体をinsertする
         cur.execute(
-            "INSERT INTO tank_bodies(tank_name, be_shot_count, engine_name, fuel_tank_name, gun_name, caterpillar_name) \
-            VALUES (%s,%s,%s,%s,%s,%s)", \
-            (tank_name, be_shot_count, engine.name, fuel_tank.name, gun.name, caterpillar.name))
-
-        # 戦車IDを取得する
-        cur.execute(
-            "SELECT tank_id FROM tank_bodies ORDER BY tank_id DESC LIMIT 1"
-        )
-        latest_tank_id = cur.fetchone()
-
-        # キャタピラをinsertする
-        cur.execute(
-            "INSERT INTO caterpillar(tank_id, caterpillar_name) \
-            VALUES (%s,%s)", \
-            (latest_tank_id, caterpillar.name))
-
-        # エンジンをinsertする
-        cur.execute(
-            "INSERT INTO engine(tank_id, engine_name) \
-            VALUES (%s,%s)", \
-            (latest_tank_id, engine.name))
-
-        # 燃料タンクをinsertする
-        cur.execute(
-            "INSERT INTO fuel_tank(tank_id, fuel_tank_name, fuel) \
+            "INSERT INTO event_attendees(event_id, event_name, attendees) \
             VALUES (%s,%s,%s)", \
-            (latest_tank_id, fuel_tank.name, fuel_tank.fuel))
-
-        # 砲塔をinsertする
-        cur.execute(
-            "INSERT INTO gun(tank_id, gun_name) \
-            VALUES (%s,%s)", \
-            (latest_tank_id, gun.name))
-
-        # 砲塔IDを取得する
-        cur.execute(
-            "SELECT gun_id FROM gun ORDER BY gun_id DESC LIMIT 1"
-        )
-        latest_gun_id = cur.fetchone()
-
-        # shellをinsertする
-        for shell in gun.shell_cover:
-            cur.execute(
-            "INSERT INTO shell(gun_id, shell_name, shell_class) \
-            VALUES (%s,%s,%s)", \
-            (latest_gun_id, shell.name, shell.SHELL_CLASS_NAME))
+            (event_id, event_name, user_name))
         con.commit()
         cur.close()
         con.close()
     except Exception as e:
-        logger.log(30,'MySQL、Insert処理失敗')
+        logger.log(30,'MySQL、Delete処理失敗')
         raise(e)
 
-def select_event_overview():
+def exit_event(event_id, user_name):
     con = None
     try:
         con = get_con()
@@ -98,172 +235,13 @@ def select_event_overview():
     cur= con.cursor()
 
     try:
+        print(event_id)
+        print(user_name)
         cur.execute(
-            "SELECT * FROM event_overview")
-        all_events = cur.fetchone()
+            "DELETE FROM event_attendees WHERE event_id = '%s' AND attendees = '%s';" % (int(event_id), user_name))
         con.commit()
         cur.close()
         con.close()
     except Exception as e:
-        logger.log(30,'MySQL、Select処理失敗')
+        logger.log(30,'MySQL、Delete処理失敗')
         raise(e)
-
-    return all_events
-
-def update_tank(tank_id, tank_name, engine_name, fuel_tank_name, gun_name, caterpillar_name):
-    con = None
-    try:
-        con = get_con()
-    except Exception as e:
-        logger.log(30,'MySQLとの接続エラー発生')
-        raise(e)
-
-    # カーソルを取得する
-    cur= con.cursor()
-
-    try:
-        # 車体テーブルをアップデートする。
-        sql = "UPDATE tank_bodies SET tank_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (tank_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        sql = "UPDATE tank_bodies SET gun_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (gun_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        sql = "UPDATE tank_bodies SET engine_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (engine_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        sql = "UPDATE tank_bodies SET fuel_tank_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (fuel_tank_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        sql = "UPDATE tank_bodies SET caterpillar_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (caterpillar_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        # Gunテーブルをアップデートする。
-        sql = "UPDATE gun SET gun_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (gun_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        # fuel_tankテーブルをアップデートする。
-        sql = "UPDATE fuel_tank SET fuel_tank_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (fuel_tank_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        # engineテーブルをアップデートする。
-        sql = "UPDATE engine SET engine_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (engine_name, tank_id))
-        r = cur.fetchall()
-        con.commit()
-
-        # caterpillarテーブルをアップデートする。
-        sql = "UPDATE caterpillar SET caterpillar_name = %s WHERE tank_id = %s"
-        cur.execute(sql, (caterpillar_name, tank_id))
-        r = cur.fetchall()
-
-        con.commit()
-        cur.close()
-        con.close()
-    except Exception as e:
-        logger.log(30,'MySQL、Select処理失敗')
-        raise(e)
-
-
-def delete_tank(tank_id):
-    con = None
-    try:
-        con = get_con()
-    except Exception as e:
-        logger.log(30,'MySQLとの接続エラー発生')
-        raise(e)
-
-    # カーソルを取得する
-    cur= con.cursor()
-
-    try:
-        # 車体テーブルから削除する。
-        cur.execute(
-            "DELETE FROM tank_bodies WHERE tank_id = '%s'" % tank_id
-        )
-
-        # 砲弾テーブルから削除する。
-        cur.execute("SELECT gun_id FROM gun WHERE tank_id = '%s'" % tank_id)
-        gun_id = cur.fetchone()
-        cur.execute("SELECT shell_name FROM shell WHERE gun_id = '%s'" % gun_id)
-        shell_name = cur.fetchone()
-        if shell_name != None:
-            cur.execute(
-                "DELETE FROM shell WHERE gun_id = '%s'" % gun_id
-            )
-
-        # Gunテーブルから削除する。
-        cur.execute(
-            "DELETE FROM gun WHERE tank_id = '%s'" % tank_id
-        )
-
-        # エンジンテーブルから削除する。
-        cur.execute(
-            "DELETE FROM engine WHERE tank_id = '%s'" % tank_id
-        )
-
-        # 燃料タンクテーブルから削除する。
-        cur.execute(
-            "DELETE FROM fuel_tank WHERE tank_id = '%s'" % tank_id
-        )
-
-        # キャタピラテーブルから削除する。
-        cur.execute(
-            "DELETE FROM caterpillar WHERE tank_id = '%s'" % tank_id
-        )
-
-        # cur.fetchall()
-        con.commit()
-        cur.close()
-        con.close()
-    except Exception as e:
-        logger.log(30,'MySQL、Select処理失敗')
-        raise(e)
-
-def get_all_tanks():
-    con = None
-    try:
-        con = get_con()
-    except Exception as e:
-        logger.log(30,'MySQLとの接続エラー発生')
-        raise(e)
-
-    # カーソルを取得する
-    cur= con.cursor()
-
-    tanks = None
-
-    try:
-        # クエリを実行する
-        sql = "SELECT * FROM tank_bodies"
-        cur.execute(sql)
-
-        # 実行結果をすべて取得する
-        tanks = cur.fetchall()
-
-        # 一行ずつ表示する
-        if len(tanks) != 0:
-            for tank in tanks:
-                print(tank)
-
-        cur.close()
-        con.close()
-    except Exception as e:
-        logger.log(30,'MySQL、Select処理失敗')
-        raise(e)
-
-    return tanks
