@@ -1,8 +1,47 @@
+.container-fluid {
+    height: 100vh;
+}
+header{
+    height: 5vh;
+}
+.event_name_row{
+    height: 25vh;
+    background-color:springgreen;
+}
+.fabicons_row{
+    height: 10vh;
+    background-color:snow;
+}
+.fabicons_row .fabicons{
+    display: flex; /* 横並び */
+    justify-content: space-around; /* 等間隔 */
+    align-items: center;     /*中央揃え*/
+}
+.event_operation_row{
+    height: 55vh;
+}
+.event_operation_row .inspect-event-column{
+    background-color:gainsboro;
+}
+.event_operation_row .management-event-column{
+    background-color:honeydew;
+}
+footer{
+    height: 5vh;
+}
 .hidden {
     visibility: hidden;
 }
-
 .visible {
     transition: 8s;
     visibility: visible;
+}
+/* medium screen */
+@media (min-width: 600px) {
+
+}
+
+/* large screen */
+@media (min-width: 800px) {
+
 }

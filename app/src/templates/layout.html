@@ -11,8 +11,13 @@
         <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
         <!-- Bootstrap JS -->
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+        <!-- fontawesomeのCDN -->
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome-animation/0.0.10/font-awesome-animation.css" type="text/css" media="all" />
+        <link href="https://fonts.googleapis.com/css?family=Caveat|Fredericka+the+Great" rel="stylesheet">
     </head>
     <body>
+        <div class="container-fluid">
         <!-- ヘッダー -->
         {% include "header.html" %}
 
@@ -21,7 +26,8 @@
 
         <!-- フッター -->
         {% include "footer.html" %}
-        <script src="../static/js/second-columns.js"></script>
-        <script src="../static/js/third-columns.js"></script>
+        </div>
+        <script src="../static/js/inspect-event-column.js"></script>
+        <script src="../static/js/management-event-column.js"></script>
     </body>
 </html>
