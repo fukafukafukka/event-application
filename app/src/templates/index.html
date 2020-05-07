@@ -1,24 +1,24 @@
 {% extends "layout.html" %}
 {% block content %}
 <form action="/home" method="POST" enctype="multipart/form-data"></form>
-<div class="row event_name_row">
-    <div class="w-100">Event-In</div>
+<div class="row application-name-row">
+    <div class="application-name">Event-In</div>
 </div>
-<div class="row fabicons_row">
-    <div class="w-100 fabicons">
+<div class="row fabicons-row">
+    <div class="fabicons">
         <!-- ファビコン一覧画面 -->
         {% include "fabicons.html" %}
     </div>
 </div>
-<div class="row event_operation_row">
-    <div class="w-50 inspect-event-column">
+<div class="row event-operation-row">
+    <div class="inspect-event-column">
         <!-- イベント一覧画面 -->
         {% include "event-table.html" %}
     </div>
-    <div class="w-50 management-event-column">
+    <div class="management-event-column">
         <!-- イベント作成画面 -->
         {% include "event-make-form.html" %}
-        <!-- 自分のイベント編集画面 -->
+        <!-- 自作のイベント編集画面 -->
         {% include "my-event-table.html" %}
     </div>
 </div>

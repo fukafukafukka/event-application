@@ -1,63 +1,68 @@
 <div id="event-table">
-    <div>末参加Event</div>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>イベント名</th>
-                <th>イベント詳細</th>
-                <th>日程</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% if not_joined_events != None %}
-            {% for event in not_joined_events %}
-            <form action="/join_event" method="POST" id="join_event{{event[0]}}"></form>
-            <tr>
-                <input type="hidden" name="event_id" value={{event[0]}} form="join_event{{event[0]}}">
-                <td><input type="text" name="event_name" value={{event[1]}} form="join_event{{event[0]}}"></td>
-                <td>{{event[2]}}</td>
-                <td>{{event[3]}}</td>
-                <td><input type="submit" value="Join!" form="join_event{{event[0]}}" style=border:none;></td>
-            </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-        {% endif %}　
-        </tbody>
-    </table>
+    <div class="recruiting-table">
+        <div class="join-us">Join us!</div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>event name</th>
+                    <th>details</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if not_joined_events != None %}
+                {% for event in not_joined_events %}
+                <form action="/join_event" method="POST" id="join_event{{event[0]}}"></form>
+                <tr>
+                    <input type="hidden" name="event_id" value={{event[0]}} form="join_event{{event[0]}}">
+                    <input type="hidden" name="event_name" value={{event[1]}} form="join_event{{event[0]}}">
+                    <td>{{event[1]}}</td>
+                    <td>{{event[2]}}</td>
+                    <td>{{event[3]}}</td>
+                    <td><input type="submit" value="Join!" form="join_event{{event[0]}}" style=border:none;></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            {% endif %}　
+            </tbody>
+        </table>
+    </div>
 
-    <div>参加済みEvent</div>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>イベント名</th>
-                <th>イベント詳細</th>
-                <th>日程</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% if joined_events != None%}
-            {% for event in joined_events %}
-            <form action="/exit_event" method="POST" id="exit_event{{event[0]}}"></form>
-            <tr>
-                <input type="hidden" name="event_id" value={{event[0]}} form="exit_event{{event[0]}}">
-                <td>{{event[1]}}</td>
-                <td>{{event[2]}}</td>
-                <td>{{event[3]}}</td>
-                <td><input type="submit" value="Exit!" form="exit_event{{event[0]}}" style=border:none;></td>
-            </tr>
-            {% endfor %}
-        {% else %}
-            <tr>
-                <td>-</td>
-                <td>-</td>
-                <td>-</td>
-            </tr>
-        {% endif %}　
-        </tbody>
-    </table>
+    <div class="scheduled-table">
+    <div class="here-we-go">Here we go!</div>
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>event name</th>
+                    <th>details</th>
+                    <th>date</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% if joined_events != None%}
+                {% for event in joined_events %}
+                <form action="/exit_event" method="POST" id="exit_event{{event[0]}}"></form>
+                <tr>
+                    <input type="hidden" name="event_id" value={{event[0]}} form="exit_event{{event[0]}}">
+                    <td>{{event[1]}}</td>
+                    <td>{{event[2]}}</td>
+                    <td>{{event[3]}}</td>
+                    <td><input type="submit" value="Exit!" form="exit_event{{event[0]}}" style=border:none;></td>
+                </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td>-</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+            {% endif %}　
+            </tbody>
+        </table>
+    </div>
 </div>

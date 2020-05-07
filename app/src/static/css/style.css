@@ -1,32 +1,113 @@
 .container-fluid {
-    height: 100vh;
+    height: 290vh;
 }
-header{
+header {
     height: 5vh;
 }
-.event_name_row{
-    height: 25vh;
+.application-name-row {
+    height: 85vh;
+}
+.application-name-row .application-name {
     background-color:springgreen;
 }
-.fabicons_row{
+.fabicons-row {
     height: 10vh;
-    background-color:snow;
 }
-.fabicons_row .fabicons{
+.fabicons-row .fabicons {
+    background-color:snow;
     display: flex; /* 横並び */
     justify-content: space-around; /* 等間隔 */
     align-items: center;     /*中央揃え*/
 }
-.event_operation_row{
-    height: 55vh;
+.event-operation-row {
+    height: 185vh;
 }
-.event_operation_row .inspect-event-column{
+.event-operation-row .inspect-event-column {
+    height: 90vh;
     background-color:gainsboro;
 }
-.event_operation_row .management-event-column{
+.event-operation-row .inspect-event-column .recruiting-table {
+    height: 45vh;
+}
+.event-operation-row .inspect-event-column .recruiting-table .join-us {
+    margin-top: 3px;
+    text-align: center;
+}
+.event-operation-row .inspect-event-column .scheduled-table {
+    height: 45vh;
+}
+.event-operation-row .inspect-event-column .scheduled-table .here-we-go {
+    margin-top: 3px;
+    text-align: center;
+}
+.event-operation-row .inspect-event-column #event-table table {
+    width: 100%;
+}
+.event-operation-row .inspect-event-column #event-table thead th {
+    /* 縦スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    /* tbody内のセルより手前に表示する */
+    z-index: 1;
+}
+.event-operation-row .inspect-event-column #event-table th:first-child, td:first-child {
+  /* 横スクロール時に固定する */
+  position: -webkit-sticky;
+  position: sticky;
+  left: 0;
+}
+.event-operation-row .management-event-column {
+    height: 95vh;
     background-color:honeydew;
 }
-footer{
+.event-operation-row .management-event-column #event-make-form {
+    height: 30vh;
+}
+.event-operation-row .management-event-column #event-make-form .make-event-form {
+    margin-top: 3px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+.event-operation-row .management-event-column #event-make-form .input {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+/* .event-operation-row .management-event-column #event-make-form input[type="date"]{
+    width: 80%;
+    margin: 0 auto;
+    text-align: right;
+} */
+.event-operation-row .management-event-column #event-make-form .button {
+    width: 30%;
+    margin: 0 left;
+}
+.event-operation-row .management-event-column #my-event-table {
+    height: 65vh;
+}
+.event-operation-row .management-event-column #my-event-table .my-events {
+    margin-top: 3px;
+    text-align: center;
+}
+.event-operation-row .management-event-column #my-event-table table {
+    width: 100%;
+}
+.event-operation-row .management-event-column #my-event-table thead th {
+    /* 縦スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    /* tbody内のセルより手前に表示する */
+    z-index: 1;
+}
+.event-operation-row .management-event-column #my-event-table th:first-child, td:first-child {
+    /* 横スクロール時に固定する */
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0;
+}
+footer {
     height: 5vh;
 }
 .hidden {
@@ -36,12 +117,62 @@ footer{
     transition: 8s;
     visibility: visible;
 }
-/* medium screen */
-@media (min-width: 600px) {
 
+/* IPhone 5/SE 横置き幅 */
+@media (min-width: 568px) {
+    .container-fluid {
+        height: 100vh;
+    }
+    header{
+        height: 5vh;
+    }
+    .application-name-row{
+        height: 25vh;
+    }
+    .application-name-row .application-name{
+        background-color:springgreen;
+    }
+    .fabicons-row{
+        height: 10vh;
+    }
+    .fabicons-row .fabicons{
+        background-color:snow;
+        display: flex; /* 横並び */
+        justify-content: space-around; /* 等間隔 */
+        align-items: center;     /*中央揃え*/
+    }
+    .event-operation-row{
+        height: 55vh;
+    }
+    .event-operation-row .inspect-event-column{
+        height: 55vh;
+        background-color:gainsboro;
+    }
+    .event-operation-row .management-event-column{
+        height: 55vh;
+        background-color:honeydew;
+    }
+    footer{
+        height: 5vh;
+    }
 }
 
-/* large screen */
-@media (min-width: 800px) {
+/* IPad 横置き幅 */
+@media (min-width:1024px) {
+
+    .width-1024-and-margin-0-auto {
+        margin: 0 auto;
+        width: 1024px;
+    }
+
+    .width-512-and-margin-left-auto {
+        margin-left: auto;
+        width: 512px;
+    }
+
+    .width-512-and-margin-right-auto {
+        margin-right: auto;
+        width: 512px;
+    }
 
 }

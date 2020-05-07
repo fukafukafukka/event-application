@@ -1,9 +1,9 @@
-<div id="event-make-form">
-<div>Event作成~form~</div>
-<form action="/add" method="POST" id="add"></form>
-<input type="text" name="event_name" placeholder="Event名" form="add" style=border:none;>
-<input type="text" name="event_details" placeholder="Event詳細" form="add" style=border:none;>
-<input type="date" name="date" placeholder="日程" form="add" style=border:none;>
-<input type="text" name="host" readonly="readonly" value={{session["user_name"]}} form="add">
-<input type="submit" value="Event追加" form="add" style=border:none;>
+<div class="text-center" id="event-make-form">
+    <div class="make-event-form">make event form</div>
+    <form action="/add" method="POST" id="add"></form>
+    <input class="input" type="text" name="event_name" placeholder="Event名" form="add" style=border:none;>
+    <input class="input" type="text" name="event_details" placeholder="Event詳細" form="add" style=border:none;>
+    <input class="input" type="date" name="date" placeholder="日程" form="add" style=border:none;>
+    <input class="input" type="text" name="host" readonly="readonly" value={{session["user_name"]}} form="add">
+    <input class="button" type="submit" value="Event追加" form="add" style=border:none;>
 </div>
