@@ -7,7 +7,7 @@
 
     const inspectEventColumnClass = document.getElementsByClassName('inspect-event-column')[0];
 
-    inspectEventColumnClass.addEventListener('click', () => {
+    inspectEventColumnClass.addEventListener('dblclick', () => {
         if(eventTableId.classList.contains("hidden")){
             // クリック時非表示であったならvisibleで表示
             eventTableId.classList.remove("hidden");

@@ -9,7 +9,7 @@
 
     const managementEventColumnClass = document.getElementsByClassName('management-event-column')[0];
 
-    managementEventColumnClass.addEventListener('click', () => {
+    managementEventColumnClass.addEventListener('dblclick', () => {
         if(eventMakeFormId.classList.contains("hidden")){
             // クリック時非表示であったならvisibleで表示
             eventMakeFormId.classList.remove("hidden");
