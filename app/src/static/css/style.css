@@ -28,20 +28,19 @@ header {
 }
 .event-operation-row .inspect-event-column .recruiting-table {
     height: 45vh;
-}
-.event-operation-row .inspect-event-column .recruiting-table .join-us {
-    margin-top: 3px;
-    text-align: center;
+    overflow: scroll;
 }
 .event-operation-row .inspect-event-column .scheduled-table {
     height: 45vh;
-}
-.event-operation-row .inspect-event-column .scheduled-table .here-we-go {
-    margin-top: 3px;
-    text-align: center;
+    overflow: scroll;
 }
 .event-operation-row .inspect-event-column #event-table table {
     width: 100%;
+    overflow: scroll;
+}
+.event-operation-row .inspect-event-column #event-table table caption {
+    caption-side: top;
+    text-align: center;
 }
 .event-operation-row .inspect-event-column #event-table thead th {
     /* 縦スクロール時に固定する */
@@ -63,6 +62,7 @@ header {
 }
 .event-operation-row .management-event-column #event-make-form {
     height: 30vh;
+    overflow: scroll;
 }
 .event-operation-row .management-event-column #event-make-form .make-event-form {
     margin-top: 3px;
@@ -74,24 +74,21 @@ header {
     margin: 0 auto;
     text-align: center;
 }
-/* .event-operation-row .management-event-column #event-make-form input[type="date"]{
-    width: 80%;
-    margin: 0 auto;
-    text-align: right;
-} */
 .event-operation-row .management-event-column #event-make-form .button {
     width: 30%;
     margin: 0 left;
 }
 .event-operation-row .management-event-column #my-event-table {
     height: 65vh;
-}
-.event-operation-row .management-event-column #my-event-table .my-events {
-    margin-top: 3px;
-    text-align: center;
+    overflow: scroll;
 }
 .event-operation-row .management-event-column #my-event-table table {
     width: 100%;
+    overflow: scroll;
+}
+.event-operation-row .management-event-column #my-event-table table caption {
+    caption-side: top;
+    text-align: center;
 }
 .event-operation-row .management-event-column #my-event-table thead th {
     /* 縦スクロール時に固定する */
@@ -127,7 +124,7 @@ footer {
         height: 5vh;
     }
     .application-name-row{
-        height: 25vh;
+        height: 30vh;
     }
     .application-name-row .application-name{
         background-color:springgreen;
@@ -142,15 +139,31 @@ footer {
         align-items: center;     /*中央揃え*/
     }
     .event-operation-row{
-        height: 55vh;
+        height: 50vh;
     }
     .event-operation-row .inspect-event-column{
-        height: 55vh;
+        height: 50vh;
         background-color:gainsboro;
     }
+    .event-operation-row .inspect-event-column .recruiting-table {
+        height: 25vh;
+        overflow: scroll;
+    }
+    .event-operation-row .inspect-event-column .scheduled-table {
+        height: 25vh;
+        overflow: scroll;
+    }
     .event-operation-row .management-event-column{
-        height: 55vh;
+        height: 50vh;
         background-color:honeydew;
+    }
+    .event-operation-row .management-event-column #event-make-form {
+        height: 20vh;
+        overflow: scroll;
+    }
+    .event-operation-row .management-event-column #my-event-table {
+        height: 30vh;
+        overflow: scroll;
     }
     footer{
         height: 5vh;

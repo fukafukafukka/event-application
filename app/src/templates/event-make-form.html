@@ -4,6 +4,6 @@
     <input class="input" type="text" name="event_name" placeholder="Event名" form="add" style=border:none;>
     <input class="input" type="text" name="event_details" placeholder="Event詳細" form="add" style=border:none;>
     <input class="input" type="date" name="date" placeholder="日程" form="add" style=border:none;>
-    <input class="input" type="text" name="host" readonly="readonly" value={{session["user_name"]}} form="add">
+    <input class="hidden" type="text" name="host" readonly="readonly" value={{session["user_name"]}} form="add">
     <input class="button" type="submit" value="Event追加" form="add" style=border:none;>
 </div>
