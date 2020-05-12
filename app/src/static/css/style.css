@@ -3,12 +3,19 @@
 }
 header {
     height: 5vh;
+    font-family: 'Caveat', cursive, "Batang";
 }
 .application-name-row {
     height: 85vh;
 }
 .application-name-row .application-name {
     background-color:springgreen;
+    font-family: 'Fredericka the Great', cursive;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;     /*中央揃え*/
+    text-align: center;
+    font-size: 5vh;
 }
 .fabicons-row {
     height: 10vh;
@@ -43,11 +50,13 @@ header {
 .event-operation-row .management-event-column #event-make-form {
     height: 30vh;
     overflow: scroll;
+    font-family: 'Caveat', cursive, "Batang";
+    font-size: 24px;
 }
 .event-operation-row .management-event-column #event-make-form label{
     margin-top: 13px;
     margin-bottom: 0px;
-    text-align: left;
+    font-size: 16px;
 }
 .event-operation-row .management-event-column #event-make-form .make-event-form {
     margin-top: 3px;
@@ -58,6 +67,7 @@ header {
     width: 50%;
     margin: 0 auto;
     text-align: center;
+    font-size: 14px;
 }
 .event-operation-row .management-event-column #event-make-form .button {
     width: 50%;
@@ -69,28 +79,51 @@ header {
 footer {
     height: 5vh;
 }
+footer a{
+    font-family: 'Caveat', cursive, "Gulim";
+    text-decoration: none;
+    color: black
+}
+footer a:hover{
+    color: rgb(95, 95, 95);
+}
 table {
     width: 100%;
 }
 table caption {
     caption-side: top;
     text-align: center;
+    font-size: 24px;
+    font-family: 'Caveat', cursive;
 }
 thead th {
     /* 縦スクロール時に固定する */
-    background-color: springgreen;
-    opacity: 0.5;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
     /* tbody内のセルより手前に表示する */
     z-index: 1;
+    font-size: 22px;
+    font-family: 'Caveat', cursive;
+}
+.event-operation-row .inspect-event-column thead th {
+    background-color: honeydew;
+    opacity: 0.7;
+}
+.event-operation-row .management-event-column thead th {
+    background-color: gainsboro;
+    opacity: 0.7;
 }
 th:first-child, td:first-child {
     /* 横スクロール時に固定する */
     position: -webkit-sticky;
     position: sticky;
     left: 0;
+}
+tbody td {
+    font-family: "SimSun";
+    font-size: 16px;
+
 }
 .hidden {
     visibility: hidden;
