@@ -1,5 +1,5 @@
 <div class="text-center" id="event-make-form">
-    <div class="make-event-form">make event form</div>
+    <div class="make-event-form">post events!</div>
     <form action="/add" method="POST" id="add"></form>
 
     <p><label for="form-1">Event name：</label></p>
@@ -8,9 +8,10 @@
     <p><label for="form-2">Event details：</label></p>
     <p><input class="input" type="text" name="event_details" placeholder="Event詳細" form="add" id="form-2" required></p>
 
-    <p><label for="form-3">date：</label></p>
+    <p><label for="form-3">Event date：</label></p>
     <p><input class="input" type="date" name="date" placeholder="日程" form="add" id="form-3" required></p>
 
-    <p><input class="hidden label-for-event-register" type="text" name="host" readonly="readonly" value={{session["user_name"]}} form="add"></p>
-    <input class="button label-for-event-register" type="submit" value="Event add!" form="add">
+    <p><label>Event host：</label></p>
+    <p><input class="input" type="text" name="host" readonly="readonly" value={{session["user_name"]}} form="add"></p>
+    <input class="button label-for-event-register" type="submit" value="post!" form="add">
 </div>
