@@ -159,7 +159,6 @@ tbody td {
         height: 50vh;
         background-color:#f2ebd1;
         cursor: pointer;
-        position: absolute;
     }
     .event-operation-row .inspect-event-column .recruiting-table {
         height: 25vh;
