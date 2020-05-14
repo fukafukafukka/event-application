@@ -1,0 +1,3 @@
+app/src/__pycache__/
+app/src/connection_password_mysqldb.py
+app/src/key.py
