@@ -1,6 +1,11 @@
 'use strict';
 
 {
+    let dblclickMessage = document.createElement('div');
+    dblclickMessage.innerText = "dblclick!"
+    dblclickMessage.classList.add("dblclick")
+    dblclickMessage.setAttribute("style","position: relative;top:-55%;left:35%; width:30%; margin:0px; text-align:center; font-family: 'Caveat', cursive;");
+
     // 最初はどちらのFormとも閉じておく。
     const eventMakeFormId = document.getElementById('event-make-form');
     eventMakeFormId.classList.add('hidden')
@@ -8,15 +13,18 @@
     myEventTableId.classList.add('hidden')
 
     const managementEventColumnClass = document.getElementsByClassName('management-event-column')[0];
+    managementEventColumnClass.appendChild(dblclickMessage);
 
     managementEventColumnClass.addEventListener('dblclick', () => {
         if(eventMakeFormId.classList.contains("hidden")){
             // クリック時非表示であったならvisibleで表示
             eventMakeFormId.classList.remove("hidden");
+            managementEventColumnClass.removeChild(dblclickMessage);
             eventMakeFormId.classList.add("visible");
         } else{
             // クリック時表示されていたならhiddenで非表示
             eventMakeFormId.classList.remove("visible");
+            managementEventColumnClass.appendChild(dblclickMessage);
             eventMakeFormId.classList.add("hidden");
         }
         if(myEventTableId.classList.contains("hidden")){
